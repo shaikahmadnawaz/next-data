@@ -70,7 +70,14 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.scrollbar,
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #858585 #1d1d1d;
 }

@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import dataRouter from "./routes/data.routes.js";
 
 const app = express();
 
@@ -26,5 +27,7 @@ app.use(
 app.get("/", async (req, res) => {
   res.json({ message: "Welcome to NextData API" });
 });
+
+app.use("/api/v1/data", dataRouter);
 
 export default app;

@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -29,6 +28,8 @@ const AddData = () => {
     hobbies: "",
   });
 
+  const { name, phoneNumber, email, hobbies } = formData;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -47,6 +48,13 @@ const AddData = () => {
 
       if (response.meta.requestStatus === "fulfilled") {
         setOpen(!open);
+
+        setFormData({
+          name: "",
+          phoneNumber: "",
+          email: "",
+          hobbies: "",
+        });
       } else {
         console.error("Failed to add data.");
       }
@@ -79,7 +87,7 @@ const AddData = () => {
                   type="text"
                   placeholder="Enter name"
                   className="col-span-3"
-                  value={formData.name}
+                  value={name}
                   onChange={handleChange}
                 />
               </div>
@@ -92,7 +100,7 @@ const AddData = () => {
                   type="tel"
                   placeholder="Enter phone number"
                   className="col-span-3"
-                  value={formData.phoneNumber}
+                  value={phoneNumber}
                   onChange={handleChange}
                 />
               </div>
@@ -105,7 +113,7 @@ const AddData = () => {
                   type="email"
                   placeholder="Enter email"
                   className="col-span-3"
-                  value={formData.email}
+                  value={email}
                   onChange={handleChange}
                 />
               </div>
@@ -118,7 +126,7 @@ const AddData = () => {
                   type="text"
                   placeholder="Enter hobbies"
                   className="col-span-3"
-                  value={formData.hobbies}
+                  value={hobbies}
                   onChange={handleChange}
                 />
               </div>

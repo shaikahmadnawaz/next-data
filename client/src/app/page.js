@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="container flex flex-col items-center w-full py-8 gap-y-8">
+    <main className="container flex flex-col items-center w-full py-8">
       <DataTable data={data} columns={DataTableColumns} />
     </main>
   );

@@ -10,8 +10,13 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
+import { useDispatch, useSelector } from "react-redux";
+import { updateData } from "@/redux/dataSlice";
+import { Loader2 } from "lucide-react";
 
 const UpdateData = ({ data }) => {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.data);
   console.log("initialData:", data);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(data);
@@ -24,25 +29,15 @@ const UpdateData = ({ data }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/v1/data/${data._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      if (response.ok) {
-        console.log("Data updated successfully.");
+      const response = await dispatch(updateData(formData));
+      if (response.meta.requestStatus == "fulfilled") {
+        setOpen(!open);
       } else {
         console.error("Failed to update data.");
       }
     } catch (error) {
       console.error("Error:", error);
     }
-    setOpen(false);
   };
 
   return (
@@ -95,7 +90,14 @@ const UpdateData = ({ data }) => {
           </div>
           <DialogFooter>
             <Button className="w-full font-semibold" type="submit">
-              Save
+              {isLoading ? (
+                <>
+                  Saving
+                  <Loader2 className="w-4 h-4 ml-2 font-semibold animate-spin" />
+                </>
+              ) : (
+                "Save"
+              )}
             </Button>
           </DialogFooter>
         </form>

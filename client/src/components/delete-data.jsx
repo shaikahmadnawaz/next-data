@@ -10,27 +10,26 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
+import { Loader2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteData } from "@/redux/dataSlice";
 
 const DeleteData = ({ data }) => {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.data);
   const [open, setOpen] = React.useState(false);
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/v1/data/${data._id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (response.ok) {
-        console.log("Data deleted successfully.");
+      const response = await dispatch(deleteData(data._id));
+      if (response.meta.requestStatus === "fulfilled") {
+        setOpen(!open);
       } else {
         console.error("Failed to delete data.");
       }
     } catch (error) {
       console.error("Error:", error);
     }
-    setOpen(false);
   };
 
   return (
@@ -53,7 +52,13 @@ const DeleteData = ({ data }) => {
             Cancel
           </Button>
           <Button variant="destructive" onClick={handleDelete}>
-            Delete
+            {isLoading ? (
+              <>
+                Deleting <Loader2 className="w-4 h-4 ml-2 animate-spin" />
+              </>
+            ) : (
+              "Delete"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

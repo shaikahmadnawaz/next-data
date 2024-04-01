@@ -11,11 +11,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { addData } from "@/redux/dataSlice";
 import { FilePlusIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2 } from "lucide-react";
 
 const AddData = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.data);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -36,21 +41,14 @@ const AddData = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/data`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await dispatch(addData(formData));
 
       console.log("Response from server:", response);
 
-      if (response.ok) {
-        setOpen(false);
+      if (response.meta.requestStatus === "fulfilled") {
+        setOpen(!open);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Something went wrong");
+        console.error("Failed to add data.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -128,7 +126,14 @@ const AddData = () => {
 
             <DialogFooter>
               <Button className="w-full font-semibold" type="submit">
-                Save
+                {isLoading ? (
+                  <>
+                    Saving
+                    <Loader2 className="w-4 h-4 ml-2 font-semibold animate-spin" />
+                  </>
+                ) : (
+                  "Save"
+                )}
               </Button>
             </DialogFooter>
           </form>

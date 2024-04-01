@@ -24,6 +24,8 @@ import { useState } from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import { RocketIcon } from "@radix-ui/react-icons";
 import AddData from "../add-data";
+import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const DataTable = ({ columns, data }) => {
   const [sorting, setSorting] = useState([]);
@@ -51,6 +53,8 @@ const DataTable = ({ columns, data }) => {
     },
   });
 
+  const [isSending, setIsSending] = useState(false);
+
   const handleSendDataByEmail = async () => {
     const selectedRows = Object.keys(rowSelection)
       .filter((key) => rowSelection[key])
@@ -60,6 +64,8 @@ const DataTable = ({ columns, data }) => {
       console.error("No rows selected.");
       return;
     }
+
+    setIsSending(true);
     try {
       const response = await fetch(
         "http://localhost:5000/api/v1/data/sendEmail",
@@ -72,12 +78,15 @@ const DataTable = ({ columns, data }) => {
         }
       );
       if (response.ok) {
+        toast.success("Email sent successfully.");
         console.log("Email sent successfully.");
       } else {
         console.error("Failed to send email.");
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -94,8 +103,16 @@ const DataTable = ({ columns, data }) => {
         <div className="flex items-center gap-x-2">
           <AddData />
           <Button onClick={handleSendDataByEmail}>
-            <RocketIcon className="w-4 h-4 mr-2" />
-            Send
+            {isSending ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" /> Sending
+              </>
+            ) : (
+              <>
+                <RocketIcon className="w-4 h-4 mr-2" />
+                Send
+              </>
+            )}
           </Button>
         </div>
       </div>

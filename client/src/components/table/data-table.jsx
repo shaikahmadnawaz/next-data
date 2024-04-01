@@ -23,6 +23,7 @@ import {
 import { useState } from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import { FilePlusIcon } from "@radix-ui/react-icons";
+import AddData from "../add-data";
 
 const DataTable = ({ columns, data }) => {
   const [sorting, setSorting] = useState([]);
@@ -60,9 +61,7 @@ const DataTable = ({ columns, data }) => {
           onChange={(e) => setFiltering(e.target.value)}
           className="max-w-sm"
         />
-        <Button variant="outline" className="ml-auto">
-          <FilePlusIcon className="w-4 h-4 mr-2" /> New
-        </Button>
+        <AddData />
       </div>
       <div className="border rounded-md">
         <Table>

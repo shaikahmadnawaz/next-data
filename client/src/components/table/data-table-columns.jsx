@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowDownUp } from "lucide-react";
 import UpdateData from "../update-data";
+import DeleteData from "../delete-data";
 
 export const DataTableColumns = [
   {
@@ -117,6 +118,7 @@ export const DataTableColumns = [
     enableHiding: false,
     cell: ({ row }) => {
       const data = row.original;
+      return <DeleteData data={data} />;
     },
   },
 ];

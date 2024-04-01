@@ -1,4 +1,4 @@
-import { UpdateIcon } from "@radix-ui/react-icons";
+import { Settings } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import {
@@ -48,7 +48,7 @@ const UpdateData = ({ data }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <UpdateIcon className="cursor-pointer" onClick={() => setOpen(true)} />
+        <Settings className="cursor-pointer" onClick={() => setOpen(true)} />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

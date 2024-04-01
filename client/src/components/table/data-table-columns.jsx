@@ -29,6 +29,7 @@ export const DataTableColumns = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
     accessorKey: "_id",
     header: ({ column }) => (
@@ -97,5 +98,23 @@ export const DataTableColumns = [
         <ArrowDownUp className="w-4 h-4 ml-1" />
       </Button>
     ),
+  },
+
+  {
+    header: "Update",
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const data = row.original;
+    },
+  },
+
+  {
+    header: "Delete",
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const data = row.original;
+    },
   },
 ];

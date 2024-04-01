@@ -128,7 +128,7 @@ const AddData = () => {
 
             <DialogFooter>
               <Button className="w-full font-semibold" type="submit">
-                Submit
+                Save
               </Button>
             </DialogFooter>
           </form>

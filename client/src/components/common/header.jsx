@@ -24,7 +24,6 @@ const Header = () => {
               </span>
             </Link>
             <div className="flex items-center gap-x-2">
-              <ModeToggle />
               <Link
                 href={"https://github.com/shaikahmadnawaz/next-data"}
                 target="blank"
@@ -32,6 +31,7 @@ const Header = () => {
               >
                 <GitHubLogoIcon className="w-6 h-6" />
               </Link>
+              <ModeToggle />
             </div>
           </div>
         </nav>

@@ -81,6 +81,7 @@ const DataTable = ({ columns, data }) => {
         toast.success("Email sent successfully.");
         console.log("Email sent successfully.");
       } else {
+        toast.error("Select rows to send email.");
         console.error("Failed to send email.");
       }
     } catch (error) {

@@ -68,7 +68,7 @@ const DataTable = ({ columns, data }) => {
     setIsSending(true);
     try {
       const response = await fetch(
-        "http://localhost:5000/api/v1/data/sendEmail",
+        "https://next-data-express-api.vercel.app/api/v1/data/sendEmail",
         {
           method: "POST",
           headers: {
